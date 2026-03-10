@@ -1,0 +1,55 @@
+<%- include('partials/header', { title: 'Şifre Değiştir' }) %>
+<%- include('partials/navbar') %>
+
+<main class="flex-grow-1 py-5">
+  <div class="container" style="max-width: 520px;">
+    <div class="d-flex align-items-center mb-4">
+      <a href="/investors" class="btn btn-outline-secondary btn-sm me-3">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <div>
+        <h4 class="mb-0 fw-bold">Profil Ayarları</h4>
+        <small class="text-muted"><%= user.full_name %> — @<%= user.username %></small>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white border-bottom py-3">
+        <h6 class="mb-0 fw-semibold"><i class="bi bi-key me-2 text-primary"></i>Şifre Değiştir</h6>
+      </div>
+      <div class="card-body p-4">
+        <% if (error) { %>
+          <div class="alert alert-danger border-0" role="alert">
+            <i class="bi bi-exclamation-circle me-2"></i><%= error %>
+          </div>
+        <% } %>
+        <% if (success) { %>
+          <div class="alert alert-success border-0" role="alert">
+            <i class="bi bi-check-circle me-2"></i><%= success %>
+          </div>
+        <% } %>
+
+        <form method="POST" action="/profile/password">
+          <div class="mb-3">
+            <label for="current_password" class="form-label fw-semibold">Mevcut Şifre</label>
+            <input type="password" class="form-control" id="current_password" name="current_password" required>
+          </div>
+          <div class="mb-3">
+            <label for="new_password" class="form-label fw-semibold">Yeni Şifre</label>
+            <input type="password" class="form-control" id="new_password" name="new_password" required minlength="6">
+            <div class="form-text">En az 6 karakter.</div>
+          </div>
+          <div class="mb-4">
+            <label for="confirm_password" class="form-label fw-semibold">Yeni Şifre (Tekrar)</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn-primary w-100 fw-semibold">
+            <i class="bi bi-check-lg me-2"></i>Şifreyi Güncelle
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

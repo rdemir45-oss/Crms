@@ -1,0 +1,202 @@
+/* ============================
+   Yatırımcı CRM — Temel Stiller
+   ============================ */
+
+:root {
+  --crm-dark: #1e293b;
+  --crm-primary: #3b82f6;
+  --crm-body-bg: #f1f5f9;
+  --crm-card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 8px rgba(0,0,0,0.06);
+}
+
+body {
+  background-color: var(--crm-body-bg);
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #334155;
+}
+
+/* ---- Navbar ---- */
+.crm-navbar {
+  background-color: var(--crm-dark) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.crm-navbar .navbar-brand {
+  font-size: 1.1rem;
+  letter-spacing: -0.3px;
+}
+
+.crm-navbar .nav-link {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8) !important;
+  transition: color 0.15s;
+}
+
+.crm-navbar .nav-link:hover,
+.crm-navbar .nav-link.active {
+  color: #fff !important;
+}
+
+/* ---- Footer ---- */
+.crm-footer {
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ---- Card ---- */
+.card {
+  box-shadow: var(--crm-card-shadow);
+}
+
+/* ---- Login ---- */
+.login-body {
+  background: linear-gradient(135deg, #1e293b 0%, #2d3f55 100%);
+}
+
+.login-card-wrapper {
+  width: 100%;
+  max-width: 460px;
+  padding: 1rem;
+}
+
+.login-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+}
+
+/* ---- Investor Avatar ---- */
+.investor-avatar {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ---- Timeline ---- */
+.timeline {
+  position: relative;
+  padding-left: 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: #e2e8f0;
+  z-index: 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.timeline-badge {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: white;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.timeline-content {
+  flex: 1;
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: var(--crm-card-shadow);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.note-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.7;
+}
+
+/* ---- Tablo ---- */
+.table > thead > tr > th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(59,130,246,0.04);
+}
+
+/* ---- Form kontrolleri ---- */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--crm-primary);
+  box-shadow: 0 0 0 0.2rem rgba(59,130,246,0.2);
+}
+
+.input-group-text {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+}
+
+/* ---- Butonlar ---- */
+.btn-primary {
+  background-color: var(--crm-primary);
+  border-color: var(--crm-primary);
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+/* ---- Alert ---- */
+.alert {
+  border-radius: 0.75rem;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .timeline::before {
+    left: 15px;
+  }
+
+  .timeline-badge {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .timeline-content {
+    padding: 1rem;
+  }
+}

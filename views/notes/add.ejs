@@ -1,0 +1,97 @@
+<%- include('../partials/header', { title: 'Not Ekle' }) %>
+<%- include('../partials/navbar') %>
+
+<main class="flex-grow-1 py-4">
+  <div class="container" style="max-width: 680px;">
+
+    <div class="d-flex align-items-center mb-4">
+      <a href="/investors/<%= investor.id %>" class="btn btn-outline-secondary btn-sm me-3">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <div>
+        <h4 class="fw-bold mb-0">Görüşme Notu Ekle</h4>
+        <small class="text-muted">
+          <i class="bi bi-person me-1"></i><%= investor.name %> <%= investor.surname %>
+        </small>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white border-bottom py-3">
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-primary rounded-circle p-2" style="width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;">
+            <%= nextStep %>
+          </span>
+          <span class="fw-semibold">Adım <%= nextStep %></span>
+        </div>
+      </div>
+      <div class="card-body p-4">
+        <% if (error) { %>
+          <div class="alert alert-danger border-0" role="alert">
+            <i class="bi bi-exclamation-circle me-2"></i><%= error %>
+          </div>
+        <% } %>
+
+        <form method="POST" action="/investors/<%= investor.id %>/notes/add">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="step_number" class="form-label fw-semibold">Adım No <span class="text-danger">*</span></label>
+              <input
+                type="number"
+                class="form-control"
+                id="step_number"
+                name="step_number"
+                value="<%= nextStep %>"
+                min="1"
+                required
+              >
+              <div class="form-text">Görüşme adımı numarası</div>
+            </div>
+            <div class="col-md-8">
+              <label for="meeting_date" class="form-label fw-semibold">Görüşme Tarihi</label>
+              <input
+                type="date"
+                class="form-control"
+                id="meeting_date"
+                name="meeting_date"
+                value="<%= new Date().toISOString().split('T')[0] %>"
+              >
+            </div>
+            <div class="col-12">
+              <label for="title" class="form-label fw-semibold">Başlık <span class="text-muted fw-normal">(isteğe bağlı)</span></label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="Örn: İlk Görüşme, Sunum, Sözleşme..."
+                maxlength="200"
+              >
+            </div>
+            <div class="col-12">
+              <label for="content" class="form-label fw-semibold">Not İçeriği <span class="text-danger">*</span></label>
+              <textarea
+                class="form-control"
+                id="content"
+                name="content"
+                rows="8"
+                required
+                placeholder="Görüşme detaylarını, kararları ve önemli noktaları buraya yazın..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary fw-semibold px-4">
+              <i class="bi bi-check-lg me-2"></i>Notu Kaydet
+            </button>
+            <a href="/investors/<%= investor.id %>" class="btn btn-outline-secondary px-4">İptal</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
