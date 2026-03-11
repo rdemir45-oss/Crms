@@ -33,7 +33,7 @@ router.get('/:investorId(\\d+)/notes/add', requireAuth, async (req, res) => {
 
 // Not ekle
 router.post('/:investorId(\\d+)/notes/add', requireAuth, async (req, res) => {
-  const { title, content, meeting_date, step_number } = req.body;
+  const { title, content, meeting_date, step_number, status } = req.body;
 
   if (!content || !content.trim()) {
     const investorResult = await pool.query('SELECT * FROM investors WHERE id = $1', [req.params.investorId]);
@@ -44,16 +44,20 @@ router.post('/:investorId(\\d+)/notes/add', requireAuth, async (req, res) => {
     });
   }
 
+  const validStatuses = ['cevapsiz', 'aktif', 'daha_sonra'];
+  const noteStatus = validStatuses.includes(status) ? status : null;
+
   try {
     await pool.query(
-      `INSERT INTO meeting_notes (investor_id, step_number, title, content, meeting_date, created_by)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
+      `INSERT INTO meeting_notes (investor_id, step_number, title, content, meeting_date, status, created_by)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [
         req.params.investorId,
         parseInt(step_number) || 1,
         title?.trim() || null,
         content.trim(),
         meeting_date || null,
+        noteStatus,
         req.session.user.id
       ]
     );
@@ -90,7 +94,7 @@ router.get('/:investorId(\\d+)/notes/:noteId(\\d+)/edit', requireAuth, async (re
 
 // Not güncelle
 router.post('/:investorId(\\d+)/notes/:noteId(\\d+)/edit', requireAuth, async (req, res) => {
-  const { title, content, meeting_date, step_number } = req.body;
+  const { title, content, meeting_date, step_number, status } = req.body;
 
   if (!content || !content.trim()) {
     const [investorResult, noteResult] = await Promise.all([
@@ -104,16 +108,20 @@ router.post('/:investorId(\\d+)/notes/:noteId(\\d+)/edit', requireAuth, async (r
     });
   }
 
+  const validStatuses = ['cevapsiz', 'aktif', 'daha_sonra'];
+  const noteStatus = validStatuses.includes(status) ? status : null;
+
   try {
     await pool.query(
       `UPDATE meeting_notes
-       SET title = $1, content = $2, meeting_date = $3, step_number = $4, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $5 AND investor_id = $6`,
+       SET title = $1, content = $2, meeting_date = $3, step_number = $4, status = $5, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $6 AND investor_id = $7`,
       [
         title?.trim() || null,
         content.trim(),
         meeting_date || null,
         parseInt(step_number) || 1,
+        noteStatus,
         req.params.noteId,
         req.params.investorId
       ]

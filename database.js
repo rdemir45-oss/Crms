@@ -45,10 +45,16 @@ async function initDatabase() {
         title VARCHAR(200),
         content TEXT NOT NULL,
         meeting_date DATE,
+        status VARCHAR(50),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         created_by INTEGER REFERENCES users(id) ON DELETE SET NULL
       )
+    `);
+
+    // Mevcut tabloya status kolonu ekle (migration)
+    await client.query(`
+      ALTER TABLE meeting_notes ADD COLUMN IF NOT EXISTS status VARCHAR(50)
     `);
 
     // 3 admin kullanıcısı oluştur (ilk çalıştırmada)

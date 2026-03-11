@@ -106,8 +106,22 @@
                     </td>
                     <td class="text-center">
                       <% if (inv.note_count > 0) { %>
-                        <span class="badge bg-primary rounded-pill">
-                          <i class="bi bi-chat-left-text me-1"></i><%= inv.note_count %> not
+                        <%
+                          let badgeClass = 'bg-primary';
+                          let statusLabel = '';
+                          if (inv.latest_status === 'cevapsiz') {
+                            badgeClass = 'bg-danger';
+                            statusLabel = ' · Cevapsız';
+                          } else if (inv.latest_status === 'aktif') {
+                            badgeClass = 'bg-success';
+                            statusLabel = ' · Aktif';
+                          } else if (inv.latest_status === 'daha_sonra') {
+                            badgeClass = 'bg-warning text-dark';
+                            statusLabel = ' · Daha Sonra';
+                          }
+                        %>
+                        <span class="badge <%= badgeClass %> rounded-pill">
+                          <i class="bi bi-chat-left-text me-1"></i><%= inv.note_count %> not<%= statusLabel %>
                         </span>
                       <% } else { %>
                         <span class="badge bg-light text-muted">Not yok</span>

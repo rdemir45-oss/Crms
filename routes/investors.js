@@ -12,7 +12,8 @@ router.get('/', requireAuth, async (req, res) => {
     if (search) {
       query = `
         SELECT i.*, u.full_name AS creator_name,
-               COUNT(mn.id)::int AS note_count
+               COUNT(mn.id)::int AS note_count,
+               (SELECT status FROM meeting_notes WHERE investor_id = i.id ORDER BY created_at DESC LIMIT 1) AS latest_status
         FROM investors i
         LEFT JOIN users u ON i.created_by = u.id
         LEFT JOIN meeting_notes mn ON i.id = mn.investor_id
@@ -27,7 +28,8 @@ router.get('/', requireAuth, async (req, res) => {
     } else {
       query = `
         SELECT i.*, u.full_name AS creator_name,
-               COUNT(mn.id)::int AS note_count
+               COUNT(mn.id)::int AS note_count,
+               (SELECT status FROM meeting_notes WHERE investor_id = i.id ORDER BY created_at DESC LIMIT 1) AS latest_status
         FROM investors i
         LEFT JOIN users u ON i.created_by = u.id
         LEFT JOIN meeting_notes mn ON i.id = mn.investor_id
